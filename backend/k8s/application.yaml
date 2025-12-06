@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: backend-argocd
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/devopslalitharwate-sudo/docker-crash-course
+    targetRevision: HEAD
+    path: backend/k8s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
