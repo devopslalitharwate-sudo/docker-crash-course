@@ -26,6 +26,7 @@ jobs:
           push: true
           tags: |
             ${{vars.DOCKER_USERNAME}}/docker-frontend:${{github.sha}}
+            ${{vars.DOCKER_USERNAME}}/docker-frontend:latest
 
       - name: Build and push backend
         uses: docker/build-push-action@v6
@@ -34,4 +35,5 @@ jobs:
           push: true
           tags: |
             ${{vars.DOCKER_USERNAME}}/docker-backend:${{github.sha}}
+            ${{vars.DOCKER_USERNAME}}/docker-backend:latest
            

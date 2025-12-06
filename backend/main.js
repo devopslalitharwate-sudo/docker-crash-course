@@ -43,6 +43,6 @@ async function startServer() {
 
 startServer();
 
-app.listen(PORT,err => {
+app.listen(PORT,"0.0.0.0",err => {
     console.log(`Listening on port: ${PORT}`)
 }) 
