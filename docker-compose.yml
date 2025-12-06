@@ -1,0 +1,64 @@
+services:
+  app:
+    container_name: node_crash_course
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+        DB_NAME: my_db
+        DB_USER: root
+        DB_PASSWORD: 1234
+        DB_HOST: db
+    volumes:
+      - ./backend:/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    container_name: mysql_db
+    image: mysql:latest
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: my_db
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD","mysqladmin","ping","-h","localhost"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  react:
+    container_name: frontend_container
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - frontend:/app/node_modules
+    depends_on:
+      - app
+
+
+  phpmyadmin:
+    container_name: phpmyadmin_ui
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_PASSWORD: 1234
+      PMA_USER: root
+    depends_on:
+      - db
+    
+
+volumes:
+  mysql_data: {}
+  frontend: {}
