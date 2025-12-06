@@ -10,13 +10,13 @@ function App() {
   const [editingUserId, setEditingUserId] = useState(null)
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/users")
+    axios.get("http://frontend.example.com/api/users")
       .then((res) => setDb(res.data.data || []))
   }, [])
 
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/users/${id}`, {
+      const res = await fetch(`http://frontend.example.com/api/users/${id}`, {
         method: "DELETE"
       })
 
@@ -32,7 +32,7 @@ function App() {
     e.preventDefault()
 
     try {
-      const res = await fetch("http://localhost:5000/api/users", {
+      const res = await fetch("http://frontend.example.com/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email })
@@ -53,7 +53,7 @@ function App() {
 
   const handleEditUser = async(id) => {
     try{
-      const res = await fetch(`http://localhost:5000/api/users/${id}`)
+      const res = await fetch(`http://frontend.example.com/api/users/${id}`)
       if(!res.ok) throw new Error("Failed to Edit")
       const data = await res.json()
       setUsername(data.data.username)
@@ -70,7 +70,7 @@ function App() {
     e.preventDefault();
 
     try {
-      const res = await fetch(`http://localhost:5000/api/users/${editingUserId}`, {
+      const res = await fetch(`http://frontend.example.com/api/users/${editingUserId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email })
