@@ -48,9 +48,10 @@ if(process.env.NODE_ENV !== "test"){
   startServer();
 }
 
-app.listen(PORT,"0.0.0.0",err => {
-    console.log(`Listening on port: ${PORT}`)
-}) 
+if (require.main === module) {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => console.log(`Server running on ${PORT}`));
+}
 
 
 module.exports = app
