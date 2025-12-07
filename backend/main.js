@@ -19,7 +19,9 @@ const PORT = 5000
 app.use("/api/users",UserRoute)
 
 app.get("/api/",async(req,res) => {
-    res.send("Hello world")
+    res.json({
+      message:"Hello world"
+    })
 })
 
 
@@ -41,8 +43,14 @@ async function startServer() {
   }
 }
 
-startServer();
+
+if(process.env.NODE_ENV !== "test"){
+  startServer();
+}
 
 app.listen(PORT,"0.0.0.0",err => {
     console.log(`Listening on port: ${PORT}`)
 }) 
+
+
+module.exports = app
